@@ -1,0 +1,92 @@
+============================================================
+ESP32 Clock — Code Explanation
+============================================================
+
+WHAT THIS PROGRAM DOES
+-----------------------
+Every 10 seconds, it prints the current time to the Serial Monitor
+in the format:  Hour:Minute:Second  (e.g. 00:01:30)
+
+The time shown is NOT the real wall-clock time. It is the time
+elapsed since the ESP32 was powered on or reset. So it always
+starts from 00:00:00.
+
+
+HOW IT WORKS — STEP BY STEP
+-----------------------------
+
+1. setup()
+   - Starts the Serial Monitor at 115200 baud.
+   - Prints a welcome message so you know the program is running.
+   - Runs only once, when the board first powers on.
+
+2. loop()
+   - Runs continuously, over and over, forever.
+   - Each time it runs, it checks: "Has 10 seconds passed since
+     the last time I printed?"
+   - It uses millis() to know how many milliseconds have passed
+     since boot. For example, after 1 minute, millis() returns
+     60000.
+   - If 10 seconds have passed, it calculates the time and prints it.
+
+3. Time calculation
+   - millis() gives us total milliseconds.
+   - Divide by 1000 to get total seconds.
+   - Divide total seconds by 3600 to get hours.
+   - The remainder (% 3600) divided by 60 gives minutes.
+   - The remainder (% 60) gives seconds.
+
+   Example after 75 seconds:
+     totalSeconds = 75
+     hours   = 75 / 3600 = 0
+     minutes = (75 % 3600) / 60 = 1
+     seconds = 75 % 60 = 15
+     → prints 00:01:15
+
+4. printFormattedTime()
+   - A helper function that handles printing.
+   - Adds a leading zero for single-digit numbers so the format
+     is always HH:MM:SS (e.g. 00:04:07 instead of 0:4:7).
+
+
+WHY millis() INSTEAD OF delay()?
+----------------------------------
+A common approach is to use delay(10000) to wait 10 seconds.
+The problem with delay() is that it completely freezes the program —
+nothing else can happen while it waits.
+
+Using millis() is non-blocking: the loop keeps running freely,
+and we just check if enough time has passed. This is the recommended
+pattern in Arduino and allows the board to do other things in
+parallel if needed in the future.
+
+
+HOW TO USE
+-----------
+1. Open esp32_clock.ino in Arduino IDE.
+2. Select your ESP32 board under Tools > Board.
+3. Select the correct COM port under Tools > Port.
+4. Click Upload.
+5. Open the Serial Monitor (Tools > Serial Monitor).
+6. Set the baud rate to 115200 (bottom right of the Serial Monitor).
+7. You should see the time printed every 10 seconds.
+
+
+SERIAL MONITOR OUTPUT EXAMPLE
+-------------------------------
+ESP32 Clock started!
+Time will be printed every 10 seconds.
+------------------------------------
+Time since boot --> 00:00:10
+Time since boot --> 00:00:20
+Time since boot --> 00:00:30
+...
+
+
+NOTE ON REAL TIME
+------------------
+If you need actual wall-clock time (e.g. 14:35:00), you would need
+either an RTC module (like DS3231) or an NTP time sync over Wi-Fi.
+This code is intentionally kept simple and requires no extra hardware.
+
+============================================================
