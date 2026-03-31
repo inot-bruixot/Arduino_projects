@@ -16,7 +16,10 @@
 // ── Configuration ────────────────────────────────────────────────────────────
 
 // MAC address of the receiver ESP32 (change this to match your board)
-uint8_t RECEIVER_MAC[] = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
+//uint8_t RECEIVER_MAC[] = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
+uint8_t RECEIVER_MAC[] = {0x88, 0x57, 0x21, 0x8E, 0x97, 0xCC};
+//88:57:21:8E:97:CC
+
 
 // How often to send a number (milliseconds)
 #define SEND_INTERVAL 5000
@@ -32,7 +35,9 @@ DataPackage myData;
 
 // ── Callback: called after each send attempt ──────────────────────────────────
 
-void onDataSent(const uint8_t *mac, esp_now_send_status_t status) {
+// Note: ESP32 core v3.x changed the first parameter from (const uint8_t *mac)
+//       to (const wifi_tx_info_t *info) — use the new signature to avoid compiler error
+void onDataSent(const wifi_tx_info_t *info, esp_now_send_status_t status) {
   Serial.print("Send status: ");
   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Success" : "Failed");
 }
