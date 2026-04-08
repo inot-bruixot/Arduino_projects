@@ -37,6 +37,7 @@
 const char* WIFI_SSID     = "YOUR_WIFI_NAME";      // <-- change this
 const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";  // <-- change this
 
+
 // ============================================================
 //  TIME CONFIGURATION
 //

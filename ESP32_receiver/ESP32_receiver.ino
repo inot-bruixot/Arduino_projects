@@ -18,7 +18,7 @@
 
 // Must match the exact same struct used in the sender
 typedef struct {
-  int number;
+  float number;
 } DataPackage;
 
 DataPackage receivedData;
@@ -32,7 +32,7 @@ void onDataReceived(const esp_now_recv_info_t *info, const uint8_t *incomingData
   memcpy(&receivedData, incomingData, sizeof(receivedData));
 
   // Print the number to Serial Monitor
-  Serial.print("The number received is: ");
+  Serial.print("The data received is: ");
   Serial.println(receivedData.number);
 }
 
@@ -55,7 +55,7 @@ void setup() {
     return;
   }
 
-  // Register the receive callback
+  // Register the receive callback  
   esp_now_register_recv_cb(onDataReceived);
 
   Serial.println("ESP32 Receiver ready. Waiting for data...");
