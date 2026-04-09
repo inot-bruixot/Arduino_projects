@@ -173,7 +173,11 @@ void handleData() {
   json += "}";
 
   // --- Send response ---
-  // 200 = HTTP OK, "application/json" tells the app what type of data this is
+  // "Access-Control-Allow-Origin: *" is required when the app runs in a browser.
+  // Without it, the browser blocks the response for security reasons (CORS policy).
+  // This header tells the browser: "any page is allowed to read this data."
+  // The Android app ignores this header — it only matters for browsers.
+  server.sendHeader("Access-Control-Allow-Origin", "*");
   server.send(200, "application/json", json);
 
   // --- Log to Serial Monitor (useful for debugging) ---
