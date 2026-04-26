@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "author": "wokwi",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 129.5, "left": -91.4, "attrs": {} },
+    {
+      "type": "board-ili9341-cap-touch",
+      "id": "lcd1",
+      "top": -162.44,
+      "left": 143.62,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-potentiometer",
+      "id": "pot",
+      "top": 420,
+      "left": 120,
+      "attrs": { "value": "0.5" }
+    }
+  ],
+  "connections": [
+    [ "lcd1:VCC",  "esp:3V3",   "red",    [ "v0" ] ],
+    [ "lcd1:GND",  "esp:GND.1", "black",  [ "v0" ] ],
+    [ "lcd1:CS",   "esp:D15",   "green",  [ "v0" ] ],
+    [ "lcd1:SDA",  "esp:D21",   "green",  [ "v201.6", "h-240", "v-134.4" ] ],
+    [ "lcd1:SCL",  "esp:D22",   "green",  [ "v192", "h-220.8", "v-153.6", "h-48" ] ],
+    [ "lcd1:MISO", "esp:D19",   "green",  [ "v182.4", "h-201.6", "v-105.6" ] ],
+    [ "lcd1:SCK",  "esp:D18",   "green",  [ "v172.8", "h-172.8", "v-86.4" ] ],
+    [ "lcd1:MOSI", "esp:D23",   "green",  [ "v211.2", "h-153.6", "v-182.4" ] ],
+    [ "lcd1:D/C",  "esp:D2",    "green",  [ "v0" ] ],
+    [ "lcd1:RST",  "esp:D4",    "green",  [ "v0" ] ],
+
+    [ "pot:VCC",   "esp:3V3",   "red",    [] ],
+    [ "pot:GND",   "esp:GND.2", "black",  [] ],
+    [ "pot:SIG",   "esp:D34",   "yellow", [] ]
+  ],
+  "dependencies": {}
+}
